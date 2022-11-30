@@ -15,7 +15,7 @@ class ClockPainter extends CustomPainter {
     double minRad = ((pi / 2) - (pi / 30) * now.minute) % (2 * pi);
     double hourRad = ((pi / 2) - (pi / 6) * now.hour) % (2 * pi);
 
-    // cetting the Center point coordinates
+    // setting the Center point coordinates
     final centerX = size.width / 2;
     final centerY = size.height / 2;
     final center = Offset(centerX, centerY);

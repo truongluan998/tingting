@@ -64,7 +64,7 @@ class _ToDoScreenState extends State<ToDoScreen> {
                 title: 'Text Schedule Noti',
                 body: 'Body Schedule Notification',
                 hour: 21,
-                minutes: 00,
+                minutes: 10,
               );
             },
             child: const Text('Set Noti'),

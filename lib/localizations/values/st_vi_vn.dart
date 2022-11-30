@@ -2,8 +2,8 @@ const Map<String, String> vi = {
   'splash_slogan' : 'đặt báo thức và thức dậy dễ dàng',
   'splash_next': 'tiếp tục',
   'alarm_hello': 'xin chào!',
-  'alarm_add': "hãy thêm báo thức",
-  'alarm_add_btn': 'thêm báo thức',
+  'alarm_add': "hãy thêm giờ ngủ",
+  'alarm_add_btn': 'thêm giờ ngủ',
   'alarm_mo': 't2',
   'alarm_tu': 't3',
   'alarm_we': 't4',
@@ -17,4 +17,5 @@ const Map<String, String> vi = {
   'alarm_voice_robot': 'robot',
   'alarm_voice_ghost': 'ma',
   'alarm_voice_create': 'tạo',
+  'alarm_setting_sleep_time': 'thiết lập thời gian ngủ',
 };

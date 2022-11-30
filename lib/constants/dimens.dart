@@ -25,9 +25,13 @@ class Dimens {
   static double size8 = 8.0;
   static double size10 = 10.0;
   static double size12 = 12.0;
+  static double size14 = 14.0;
   static double size16 = 16.0;
   static double size20 = 20.0;
+  static double size22 = 22.0;
   static double size24 = 24.0;
+  static double size26 = 26.0;
+  static double size28 = 28.0;
   static double size32 = 32.0;
   static double size36 = 36.0;
   static double size40 = 40.0;
@@ -41,14 +45,31 @@ class Dimens {
   static double size104 = 104.0;
 
   static double opa0Dot2 = 0.2;
+
+  static double negativeOffset30 = -30;
 }
 
 class Numbers {
   static int numberZero = 0;
   static int numberOne = 1;
   static int numberTwo = 2;
+  static int numberEight = 8;
+  static int numberTwentyFour = 24;
 }
 
 class DimenString {
   static String emptyText = '';
+}
+
+class TimeRanger{
+  static List<String> labelTime = [
+    "12 am",
+    "3 am",
+    "6 am",
+    "9 am",
+    "12 pm",
+    "3 pm",
+    "6 pm",
+    "9 pm",
+  ];
 }

@@ -2,8 +2,8 @@ const Map<String, String> en = {
   'splash_slogan': 'set alarm and wake up easily',
   'splash_next': 'next',
   'alarm_hello': 'hello there!',
-  'alarm_add': "let's add an alarm",
-  'alarm_add_btn': 'add alarm',
+  'alarm_add': "let's add time sleep",
+  'alarm_add_btn': 'add time sleep',
   'alarm_mo': 'mo',
   'alarm_tu': 'tu',
   'alarm_we': 'we',
@@ -17,4 +17,5 @@ const Map<String, String> en = {
   'alarm_voice_robot': 'robot',
   'alarm_voice_ghost': 'ghost',
   'alarm_voice_create': 'create',
+  'alarm_setting_sleep_time': 'setting sleep time',
 };
