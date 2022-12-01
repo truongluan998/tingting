@@ -18,4 +18,7 @@ const Map<String, String> vi = {
   'alarm_voice_ghost': 'ma',
   'alarm_voice_create': 'tạo',
   'alarm_setting_sleep_time': 'thiết lập thời gian ngủ',
+  'alarm_setting_to_bed': 'đi ngủ',
+  'alarm_setting_wake_up': 'thức dậy',
+  'alarm_setting_hours_of_sleep': ' giờ ngủ',
 };

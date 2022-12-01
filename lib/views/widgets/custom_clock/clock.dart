@@ -5,6 +5,7 @@ import 'package:tingting/theme/ting_ting_app_color.dart';
 
 import '../../../controllers/clock_controller.dart';
 import '../../../uitls/convert_time.dart';
+import '../../../uitls/enum.dart';
 import '../../canvas/clock_painter.dart';
 import '../alarm/show_time.dart';
 import 'circle_clock.dart';
@@ -60,7 +61,7 @@ class Clock extends StatelessWidget {
                   builder: (clock) => Container(
                     constraints: const BoxConstraints.expand(),
                     child: CustomPaint(
-                      painter: ClockPainter(now: clock.time.value),
+                      painter: ClockPainter(now: clock.timeNow.value),
                     ),
                   ),
                 ),
@@ -71,9 +72,9 @@ class Clock extends StatelessWidget {
           GetBuilder<ClockController>(
             builder: (clock) => Row(
               children: [
-                ShowTime(title: ConvertTime.convertToHMS(clock.time.value)),
+                ShowTime(title: ConvertTime.convertDateTime(clock.timeNow.value, ConvertTimeType.hms)),
                 const Spacer(),
-                ShowTime(title: ConvertTime.convertToDMY(clock.time.value)),
+                ShowTime(title: ConvertTime.convertDateTime(clock.timeNow.value, ConvertTimeType.dmy)),
               ],
             ),
           )

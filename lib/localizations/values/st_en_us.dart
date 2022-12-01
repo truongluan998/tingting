@@ -18,4 +18,7 @@ const Map<String, String> en = {
   'alarm_voice_ghost': 'ghost',
   'alarm_voice_create': 'create',
   'alarm_setting_sleep_time': 'setting sleep time',
+  'alarm_setting_to_bed': 'to bed',
+  'alarm_setting_wake_up': 'wake up',
+  'alarm_setting_hours_of_sleep': ' hours of sleep',
 };

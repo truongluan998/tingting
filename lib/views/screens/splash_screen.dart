@@ -72,7 +72,7 @@ class SplashScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     AppButton(
-                      onPressed: () => Get.toNamed("/alarm"),
+                      onPressed: () => Get.offAllNamed("/alarm"),
                       borderRadius: BorderRadius.circular(Dimens.size36),
                       child: CustomTitle(
                         title: 'splash_next'.tr,

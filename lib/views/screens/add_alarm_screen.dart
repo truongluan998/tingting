@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tingting/theme/ting_ting_app_color.dart';
@@ -7,6 +5,7 @@ import 'package:tingting/views/widgets/custom_title.dart';
 import 'package:time_range_picker/time_range_picker.dart';
 
 import '../../constants/dimens.dart';
+import '../../controllers/clock_controller.dart';
 import '../canvas/time_sleep_painter.dart';
 import '../widgets/alarm/choice_day.dart';
 import '../widgets/alarm/choice_voice.dart';
@@ -20,6 +19,8 @@ class AddAlarmScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context).textTheme;
+
+    final clockController = Get.find<ClockController>();
 
     /// TODO: hard code to test
     var isHaveSleepTime = true;
@@ -42,114 +43,125 @@ class AddAlarmScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Center(
-                child: GestureDetector(
-                  onTap: () => showTimeRangePicker(
-                    context: context,
-                    onStartChange: (start) {
-                      /// TODO: handle start time
-                    },
-                    onEndChange: (end) {
-                      /// TODO: handle end time
-                    },
-                    interval: const Duration(minutes: 30),
-                    minDuration: const Duration(minutes: 30),
-                    use24HourFormat: true,
-                    padding: Dimens.size32,
-                    strokeWidth: Dimens.size20,
-                    handlerRadius: Dimens.size14,
-                    strokeColor: TingTingAppColor.clockBoxShadow,
-                    handlerColor: TingTingAppColor.mainColor,
-                    selectedColor: TingTingAppColor.mainColor,
-                    backgroundColor: TingTingAppColor.addAlarmScaffoldColor,
-                    ticks: Numbers.numberTwentyFour,
-                    ticksColor: TingTingAppColor.whiteColor,
-                    snap: true,
-                    labels: TimeRanger.labelTime.asMap().entries.map((e) {
-                      return ClockLabel.fromIndex(
-                        idx: e.key,
-                        length: Numbers.numberEight,
-                        text: e.value,
-                      );
-                    }).toList(),
-                    labelOffset: Dimens.negativeOffset30,
-                    labelStyle: theme.subtitle2,
-                    timeTextStyle: theme.subtitle1!.copyWith(fontSize: Dimens.size24),
-                    activeTimeTextStyle: theme.subtitle1,
-                  ),
-                  child: SizedBox(
-                    width: 300,
-                    height: 300,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CircleClock(
-                          isBoxConstraints: true,
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              TingTingAppColor.clockGradientColorOne,
-                              TingTingAppColor.clockGradientColorTwo,
-                            ],
+                child: Obx(
+                  () => GestureDetector(
+                    onTap: () => showTimeRangePicker(
+                      context: context,
+                      start: clockController.timeSleep.value,
+                      end: clockController.timeWakeup.value,
+                      onStartChange: (start) {
+                        clockController.setSleepTime(start);
+                      },
+                      onEndChange: (end) {
+                        clockController.setWakeupTime(end);
+                      },
+                      interval: const Duration(minutes: 1),
+                      minDuration: const Duration(minutes: 1),
+                      padding: Dimens.size32,
+                      strokeWidth: Dimens.size20,
+                      handlerRadius: Dimens.size14,
+                      strokeColor: TingTingAppColor.clockBoxShadow,
+                      handlerColor: TingTingAppColor.mainColor,
+                      selectedColor: TingTingAppColor.mainColor,
+                      backgroundColor: TingTingAppColor.addAlarmScaffoldColor,
+                      ticks: Numbers.numberTwentyFour,
+                      ticksColor: TingTingAppColor.whiteColor,
+                      snap: true,
+                      labels: TimeRanger.labelTime.asMap().entries.map((e) {
+                        return ClockLabel.fromIndex(
+                          idx: e.key,
+                          length: Numbers.numberEight,
+                          text: e.value,
+                        );
+                      }).toList(),
+                      labelOffset: Dimens.negativeOffset30,
+                      labelStyle: theme.subtitle2,
+                      timeTextStyle: theme.subtitle1!.copyWith(fontSize: Dimens.size24),
+                      activeTimeTextStyle: theme.subtitle1,
+                    ),
+                    child: SizedBox(
+                      width: 300,
+                      height: 300,
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          CircleClock(
+                            isBoxConstraints: true,
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                TingTingAppColor.clockGradientColorOne,
+                                TingTingAppColor.clockGradientColorTwo,
+                              ],
+                            ),
+                            offsetOne: Dimens.size40,
+                            offsetTwo: Dimens.size20,
+                            offsetThree: Dimens.negativeSize20,
+                            offsetFour: Dimens.negativeSize10,
                           ),
-                          offsetOne: Dimens.size40,
-                          offsetTwo: Dimens.size20,
-                          offsetThree: Dimens.negativeSize20,
-                          offsetFour: Dimens.negativeSize10,
-                        ),
-                        CircleClock(
-                          width: size.width * Dimens.size0dot5,
-                          height: size.height * Dimens.size0dot25,
-                          gradient: const LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            colors: [
-                              TingTingAppColor.smallClockGradientColorOne,
-                              TingTingAppColor.smallClockGradientColorTwo,
-                            ],
+                          CircleClock(
+                            width: size.width * Dimens.size0dot5,
+                            height: size.height * Dimens.size0dot25,
+                            gradient: const LinearGradient(
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight,
+                              colors: [
+                                TingTingAppColor.smallClockGradientColorOne,
+                                TingTingAppColor.smallClockGradientColorTwo,
+                              ],
+                            ),
+                            offsetOne: Dimens.size10,
+                            offsetTwo: Dimens.size5,
+                            offsetThree: Dimens.negativeSize10,
+                            offsetFour: Dimens.negativeSize5,
                           ),
-                          offsetOne: Dimens.size10,
-                          offsetTwo: Dimens.size5,
-                          offsetThree: Dimens.negativeSize10,
-                          offsetFour: Dimens.negativeSize5,
-                        ),
-                        SizedBox(
-                          width: size.width * Dimens.size0dot5,
-                          height: size.height * Dimens.size0dot25,
-                          child: isHaveSleepTime
-                              ? Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    CustomTitle(title: 'to bed', style: theme.button),
-                                    CustomTitle(title: '23:30', style: theme.headline3),
-                                    SizedBox(height: Dimens.size16),
-                                    CustomTitle(title: '8 hours of sleep', style: theme.button),
-                                    SizedBox(height: Dimens.size16),
-                                    CustomTitle(title: '07:30', style: theme.headline3),
-                                    CustomTitle(title: 'wake up', style: theme.button),
-                                  ],
-                                )
-                              : Center(
-                                  child: Row(
+                          SizedBox(
+                            width: size.width * Dimens.size0dot5,
+                            height: size.height * Dimens.size0dot25,
+                            child: isHaveSleepTime
+                                ? Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
+                                      CustomTitle(title: 'alarm_setting_to_bed'.tr, style: theme.button),
                                       CustomTitle(
-                                        title: 'alarm_setting_sleep_time'.tr,
-                                        style: theme.button,
-                                        isCenterTitle: true,
+                                        title: clockController.timeSleep.value.format(context),
+                                        style: theme.headline3,
                                       ),
-                                      const Icon(Icons.shield_moon)
+                                      SizedBox(height: Dimens.size16),
+                                      CustomTitle(
+                                          title: clockController.sleepingTime.value + 'alarm_setting_hours_of_sleep'.tr,
+                                          style: theme.button),
+                                      SizedBox(height: Dimens.size16),
+                                      CustomTitle(
+                                        title: clockController.timeWakeup.value.format(context),
+                                        style: theme.headline3,
+                                      ),
+                                      CustomTitle(title: 'alarm_setting_wake_up'.tr, style: theme.button),
                                     ],
+                                  )
+                                : Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        CustomTitle(
+                                          title: 'alarm_setting_sleep_time'.tr,
+                                          style: theme.button,
+                                          isCenterTitle: true,
+                                        ),
+                                        const Icon(Icons.shield_moon)
+                                      ],
+                                    ),
                                   ),
-                                ),
-                        ),
-                        Container(
-                          constraints: const BoxConstraints.expand(),
-                          child: CustomPaint(
-                            painter: TimeSleepPainter(),
                           ),
-                        )
-                      ],
+                          Container(
+                            constraints: const BoxConstraints.expand(),
+                            child: CustomPaint(
+                              painter: TimeSleepPainter(),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
