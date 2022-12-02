@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,9 +8,11 @@ import 'package:tingting/uitls/date_time_extension.dart';
 
 class ClockController extends GetxController {
   var timeNow = DateTime.now().obs;
-  var timeSleep = TimeOfDay.now().obs;
-  var timeWakeup = TimeOfDay.now().obs;
+  var timeSleep = const TimeOfDay(hour: 22, minute: 0).obs;
+  var timeWakeup = const TimeOfDay(hour: 6, minute: 0).obs;
   var sleepingTime = ''.obs;
+
+  var listDayOfToSleep = HashMap().obs;
 
   @override
   void onInit() {
@@ -18,11 +21,22 @@ class ClockController extends GetxController {
       timeNow = DateTime.now().obs;
       update();
     });
-
-    if (timeWakeup.value == timeSleep.value) {
-      timeWakeup.value = timeSleep.value.addHour(hour: 8);
+    if (listDayOfToSleep.value.keys.isEmpty) {
+      initListDayOfToSleep();
     }
     _calculateSleepingTime();
+  }
+
+  initListDayOfToSleep() {
+    listDayOfToSleep.value.addAll({
+      'mo': false,
+      'tu': false,
+      'we': false,
+      'th': false,
+      'fr': false,
+      'sa': false,
+      'su': false,
+    });
   }
 
   void setSleepTime(TimeOfDay? time) {
@@ -34,20 +48,19 @@ class ClockController extends GetxController {
 
   void setWakeupTime(TimeOfDay? time) {
     if (time != null) {
-      if (timeWakeup.value == timeSleep.value) {
-        timeWakeup.value = timeSleep.value.addHour(hour: 8);
-      } else {
-        timeWakeup.value = time;
-        _calculateSleepingTime();
-      }
+      timeWakeup.value = time;
+      _calculateSleepingTime();
     }
   }
 
   void _calculateSleepingTime() {
     var sleep = const Duration().obs;
 
-    final startTime = ConvertTime.convertTimeOfDayToDateTime(timeNow.value, timeSleep.value);
-    final endTime = ConvertTime.convertTimeOfDayToDateTime(timeNow.value, timeWakeup.value).add(
+    final startTime =
+        ConvertTime.convertTimeOfDayToDateTime(timeNow.value, timeSleep.value);
+    final endTime =
+        ConvertTime.convertTimeOfDayToDateTime(timeNow.value, timeWakeup.value)
+            .add(
       const Duration(days: 1),
     );
 
@@ -57,5 +70,10 @@ class ClockController extends GetxController {
     } else {
       sleepingTime.value = '${sleep.value.inHours}';
     }
+  }
+
+  void pickDaySleep(String key) {
+    listDayOfToSleep.value.update(key, (value) => value = !value);
+    update();
   }
 }

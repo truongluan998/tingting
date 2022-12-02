@@ -9,10 +9,12 @@ class ChoiceDay extends StatelessWidget {
     Key? key,
     required this.title,
     required this.press,
+    required this.isActive,
   }) : super(key: key);
 
   final String title;
   final VoidCallback press;
+  final bool isActive;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +28,15 @@ class ChoiceDay extends StatelessWidget {
         height: Dimens.size64,
         width: Dimens.size56,
         decoration: BoxDecoration(
-          color: TingTingAppColor.clockGradientColorTwo,
+          color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.clockGradientColorTwo,
           borderRadius: BorderRadius.circular(Dimens.size32),
         ),
         child: Center(
           child: CustomTitle(
             title: title,
-            style: theme.button,
+            style: theme.button!.copyWith(
+              color: isActive ? TingTingAppColor.whiteColor : TingTingAppColor.mainColor,
+            ),
           ),
         ),
       ),

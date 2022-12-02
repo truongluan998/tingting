@@ -169,37 +169,22 @@ class AddAlarmScreen extends StatelessWidget {
               SizedBox(height: Dimens.size24),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    ChoiceDay(
-                      title: 'alarm_mo'.tr,
-                      press: () {},
-                    ),
-                    ChoiceDay(
-                      title: 'alarm_tu'.tr,
-                      press: () {},
-                    ),
-                    ChoiceDay(
-                      title: 'alarm_we'.tr,
-                      press: () {},
-                    ),
-                    ChoiceDay(
-                      title: 'alarm_th'.tr,
-                      press: () {},
-                    ),
-                    ChoiceDay(
-                      title: 'alarm_fr'.tr,
-                      press: () {},
-                    ),
-                    ChoiceDay(
-                      title: 'alarm_sa'.tr,
-                      press: () {},
-                    ),
-                    ChoiceDay(
-                      title: 'alarm_su'.tr,
-                      press: () {},
-                    ),
-                  ],
+                child: GetBuilder(
+                  init: clockController,
+                  builder: (ClockController controller) {
+                    return Row(
+                      children: [
+                        for (int i = 0; i < controller.listDayOfToSleep.value.length; i++)
+                          ChoiceDay(
+                            title: 'alarm_${controller.listDayOfToSleep.value.keys.elementAt(i)}'.tr,
+                            press: () => controller.pickDaySleep(
+                              controller.listDayOfToSleep.value.keys.elementAt(i),
+                            ),
+                            isActive: controller.listDayOfToSleep.value.values.elementAt(i),
+                          ),
+                      ],
+                    );
+                  },
                 ),
               ),
               Padding(
