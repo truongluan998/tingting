@@ -16,6 +16,7 @@ class Clock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final clockController = Get.find<ClockController>();
 
     return Center(
       child: Column(
@@ -58,10 +59,11 @@ class Clock extends StatelessWidget {
                   offsetFour: Dimens.negativeSize5,
                 ),
                 GetBuilder<ClockController>(
-                  builder: (clock) => Container(
+                  init: clockController,
+                  builder: (_) => Container(
                     constraints: const BoxConstraints.expand(),
                     child: CustomPaint(
-                      painter: ClockPainter(now: clock.timeNow.value),
+                      painter: ClockPainter(now: clockController.timeNow.value),
                     ),
                   ),
                 ),
@@ -70,11 +72,12 @@ class Clock extends StatelessWidget {
           ),
           const Spacer(),
           GetBuilder<ClockController>(
-            builder: (clock) => Row(
+            init: clockController,
+            builder: (_) => Row(
               children: [
-                ShowTime(title: ConvertTime.convertDateTime(clock.timeNow.value, ConvertTimeType.hms)),
+                ShowTime(title: ConvertTime.convertDateTime(clockController.timeNow.value, ConvertTimeType.hms)),
                 const Spacer(),
-                ShowTime(title: ConvertTime.convertDateTime(clock.timeNow.value, ConvertTimeType.dmy)),
+                ShowTime(title: ConvertTime.convertDateTime(clockController.timeNow.value, ConvertTimeType.dmy)),
               ],
             ),
           )

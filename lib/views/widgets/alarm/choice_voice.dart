@@ -8,12 +8,14 @@ class ChoiceVoice extends StatelessWidget {
   final String title;
   final IconData icon;
   final VoidCallback press;
+  final bool isActive;
 
   const ChoiceVoice({
     Key? key,
     required this.title,
     required this.icon,
     required this.press,
+    required this.isActive,
   }) : super(key: key);
 
   @override
@@ -31,7 +33,7 @@ class ChoiceVoice extends StatelessWidget {
         height: Dimens.size56,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: TingTingAppColor.clockGradientColorTwo,
+          color: isActive ? TingTingAppColor.clockGradientColorTwo : TingTingAppColor.mainColor,
           borderRadius: BorderRadius.circular(Dimens.size16),
         ),
         child: Row(
@@ -41,13 +43,22 @@ class ChoiceVoice extends StatelessWidget {
               child: Icon(
                 icon,
                 size: Dimens.size32,
+                color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.whiteColor,
               ),
             ),
-            CustomTitle(title: title, style: theme.button),
+            CustomTitle(
+              title: title,
+              style: theme.button!.copyWith(
+                color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.whiteColor,
+              ),
+            ),
             const Spacer(),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimens.size8),
-              child: const Icon(Icons.navigate_next),
+              child: Icon(
+                Icons.navigate_next,
+                color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.whiteColor,
+              ),
             )
           ],
         ),

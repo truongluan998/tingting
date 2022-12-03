@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Dimens {
   static double negativeSize20 = -20;
   static double negativeSize10 = -10;
@@ -71,5 +73,14 @@ class TimeRanger{
     "3 pm",
     "6 pm",
     "9 pm",
+  ];
+}
+
+class AppIcon {
+  static List<IconData> iconVoice = [
+    Icons.man_sharp,
+    Icons.woman_sharp,
+    Icons.ac_unit,
+    Icons.account_circle_sharp,
   ];
 }

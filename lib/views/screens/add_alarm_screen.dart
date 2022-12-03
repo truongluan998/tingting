@@ -22,9 +22,6 @@ class AddAlarmScreen extends StatelessWidget {
 
     final clockController = Get.find<ClockController>();
 
-    /// TODO: hard code to test
-    var isHaveSleepTime = true;
-
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -117,43 +114,28 @@ class AddAlarmScreen extends StatelessWidget {
                             offsetFour: Dimens.negativeSize5,
                           ),
                           SizedBox(
-                            width: size.width * Dimens.size0dot5,
-                            height: size.height * Dimens.size0dot25,
-                            child: isHaveSleepTime
-                                ? Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      CustomTitle(title: 'alarm_setting_to_bed'.tr, style: theme.button),
-                                      CustomTitle(
-                                        title: clockController.timeSleep.value.format(context),
-                                        style: theme.headline3,
-                                      ),
-                                      SizedBox(height: Dimens.size16),
-                                      CustomTitle(
-                                          title: clockController.sleepingTime.value + 'alarm_setting_hours_of_sleep'.tr,
-                                          style: theme.button),
-                                      SizedBox(height: Dimens.size16),
-                                      CustomTitle(
-                                        title: clockController.timeWakeup.value.format(context),
-                                        style: theme.headline3,
-                                      ),
-                                      CustomTitle(title: 'alarm_setting_wake_up'.tr, style: theme.button),
-                                    ],
-                                  )
-                                : Center(
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        CustomTitle(
-                                          title: 'alarm_setting_sleep_time'.tr,
-                                          style: theme.button,
-                                          isCenterTitle: true,
-                                        ),
-                                        const Icon(Icons.shield_moon)
-                                      ],
-                                    ),
+                              width: size.width * Dimens.size0dot5,
+                              height: size.height * Dimens.size0dot25,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CustomTitle(title: 'alarm_setting_to_bed'.tr, style: theme.button),
+                                  CustomTitle(
+                                    title: clockController.timeSleep.value.format(context),
+                                    style: theme.headline3,
                                   ),
-                          ),
+                                  SizedBox(height: Dimens.size16),
+                                  CustomTitle(
+                                      title: clockController.sleepingTime.value + 'alarm_setting_hours_of_sleep'.tr,
+                                      style: theme.button),
+                                  SizedBox(height: Dimens.size16),
+                                  CustomTitle(
+                                    title: clockController.timeWakeup.value.format(context),
+                                    style: theme.headline3,
+                                  ),
+                                  CustomTitle(title: 'alarm_setting_wake_up'.tr, style: theme.button),
+                                ],
+                              )),
                           Container(
                             constraints: const BoxConstraints.expand(),
                             child: CustomPaint(
@@ -169,22 +151,22 @@ class AddAlarmScreen extends StatelessWidget {
               SizedBox(height: Dimens.size24),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                child: GetBuilder(
-                  init: clockController,
-                  builder: (ClockController controller) {
-                    return Row(
-                      children: [
-                        for (int i = 0; i < controller.listDayOfToSleep.value.length; i++)
-                          ChoiceDay(
-                            title: 'alarm_${controller.listDayOfToSleep.value.keys.elementAt(i)}'.tr,
-                            press: () => controller.pickDaySleep(
-                              controller.listDayOfToSleep.value.keys.elementAt(i),
+                child: Row(
+                  children: [
+                    for (int i = 0; i < clockController.listDayOfToSleep.value.length; i++)
+                      GetBuilder(
+                        init: clockController,
+                        builder: (_) {
+                          return ChoiceDay(
+                            title: 'alarm_${clockController.listDayOfToSleep.value.keys.elementAt(i)}'.tr,
+                            press: () => clockController.choiceDaySleep(
+                              clockController.listDayOfToSleep.value.keys.elementAt(i),
                             ),
-                            isActive: controller.listDayOfToSleep.value.values.elementAt(i),
-                          ),
-                      ],
-                    );
-                  },
+                            isActive: clockController.listDayOfToSleep.value.values.elementAt(i),
+                          );
+                        },
+                      ),
+                  ],
                 ),
               ),
               Padding(
@@ -198,26 +180,20 @@ class AddAlarmScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomTitle(title: 'alarm_voice'.tr, style: theme.button),
-                    ChoiceVoice(
-                      title: 'alarm_voice_men'.tr,
-                      icon: Icons.man_sharp,
-                      press: () {},
-                    ),
-                    ChoiceVoice(
-                      title: 'alarm_voice_woman'.tr,
-                      icon: Icons.woman_sharp,
-                      press: () {},
-                    ),
-                    ChoiceVoice(
-                      title: 'alarm_voice_robot'.tr,
-                      icon: Icons.ac_unit,
-                      press: () {},
-                    ),
-                    ChoiceVoice(
-                      title: 'alarm_voice_ghost'.tr,
-                      icon: Icons.account_circle_sharp,
-                      press: () {},
-                    ),
+                    for (int i = 0; i < clockController.listVoice.value.length; i++)
+                      GetBuilder(
+                        init: clockController,
+                        builder: (_) {
+                          return ChoiceVoice(
+                            title: 'alarm_voice_${clockController.listVoice.value.keys.elementAt(i)}'.tr,
+                            icon: AppIcon.iconVoice[i],
+                            press: () => clockController.choiceVoice(
+                              clockController.listVoice.value.keys.elementAt(i),
+                            ),
+                            isActive: clockController.listVoice.value.values.elementAt(i),
+                          );
+                        },
+                      ),
                   ],
                 ),
               ),
