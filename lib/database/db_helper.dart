@@ -4,9 +4,9 @@ import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tingting/models/time_sleep.dart';
-import 'package:tingting/repository/clock_repository.dart';
+import 'package:tingting/repository/db_repository.dart';
 
-class DBHelper extends ClockRepository {
+class DBHelper extends DBRepository {
   Database? _database;
 
   Future<Database> get database async {
@@ -15,41 +15,52 @@ class DBHelper extends ClockRepository {
     return _database!;
   }
 
+  static Future _onCreate(Database db, int version) async {
+    await db.execute(
+        'CREATE TABLE TimeSleep (id TEXT PRIMARY KEY, toBedTime TEXT, wakeUpTime TEXT, date TEXT, voice TEXT)');
+  }
+
   _initDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "tingting.db");
-    return await openDatabase(path, version: 1, onOpen: (db) {}, onCreate: (
-      Database db,
-      int version,
-    ) async {
-      /// TODO: Implement in future
-      await db.execute("CREATE TABLE TimeSleep ("
-          // "id Text,"
-          // "toBedTime TEXT,"
-          // "wakeUpTime TEXT,"
-          // "date TEXT,"
-          // "dayOfWeek TEXT,"
-          // "voice TEXT,"
-          // "isActive INT"
-          ")");
-    });
+    print(path);
+    return await openDatabase(path, version: 1, onOpen: (db) {}, onCreate: _onCreate);
   }
 
   @override
-  Future<void> addSleepTime(TimeSleep timeSleep) {
-    // TODO: implement addSleepTime
-    throw UnimplementedError();
+  Future<void> addSleepTime(TimeSleep? timeSleep) async {
+    final db = await database;
+    try {
+      if (timeSleep != null) {
+        db.insert('TimeSleep', timeSleep.toJson(), conflictAlgorithm: ConflictAlgorithm.replace);
+      }
+    } catch (_) {}
   }
 
   @override
-  Future<TimeSleep> getSleepTime() {
-    // TODO: implement getSleepTime
-    throw UnimplementedError();
+  Future<TimeSleep?> getSleepTime() async {
+    final db = await database;
+    try {
+      final result = await db.rawQuery('SELECT * FROM TimeSleep');
+      if (result.isNotEmpty) {
+        return TimeSleep.fromJson(result.first);
+      } else {
+        return null;
+      }
+    } catch (_) {
+      return null;
+    }
   }
 
   @override
-  Future<TimeSleep> updateSleepTime(String id) {
+  Future<TimeSleep?> updateSleepTime(String? id) {
     // TODO: implement updateSleepTime
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> deleteAllSleepTime() {
+    // TODO: implement deleteAllSleepTime
     throw UnimplementedError();
   }
 }

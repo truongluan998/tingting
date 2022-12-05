@@ -8,24 +8,16 @@ part of 'time_sleep.dart';
 
 TimeSleep _$TimeSleepFromJson(Map<String, dynamic> json) => TimeSleep(
       id: json['id'] as String?,
-      toBedTime: json['toBedTime'] == null
-          ? null
-          : DateTime.parse(json['toBedTime'] as String),
-      wakeUpTime: json['wakeUpTime'] == null
-          ? null
-          : DateTime.parse(json['wakeUpTime'] as String),
-      date: (json['date'] as List<dynamic>?)
-          ?.map((e) => DaySleep.fromJson(e as Map<String, dynamic>))
-          .toList(),
-      voice: (json['voice'] as List<dynamic>?)
-          ?.map((e) => VoiceSleep.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      toBedTime: json['toBedTime'] as String?,
+      wakeUpTime: json['wakeUpTime'] as String?,
+      date: json['date'] as String?,
+      voice: json['voice'] as String?,
     );
 
 Map<String, dynamic> _$TimeSleepToJson(TimeSleep instance) => <String, dynamic>{
       'id': instance.id,
-      'toBedTime': instance.toBedTime?.toIso8601String(),
-      'wakeUpTime': instance.wakeUpTime?.toIso8601String(),
+      'toBedTime': instance.toBedTime,
+      'wakeUpTime': instance.wakeUpTime,
       'date': instance.date,
       'voice': instance.voice,
     };

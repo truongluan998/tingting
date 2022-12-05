@@ -33,7 +33,7 @@ class ChoiceVoice extends StatelessWidget {
         height: Dimens.size56,
         width: double.infinity,
         decoration: BoxDecoration(
-          color: isActive ? TingTingAppColor.clockGradientColorTwo : TingTingAppColor.mainColor,
+          color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.clockGradientColorTwo,
           borderRadius: BorderRadius.circular(Dimens.size16),
         ),
         child: Row(
@@ -43,13 +43,13 @@ class ChoiceVoice extends StatelessWidget {
               child: Icon(
                 icon,
                 size: Dimens.size32,
-                color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.whiteColor,
+                color: isActive ? TingTingAppColor.whiteColor : TingTingAppColor.mainColor,
               ),
             ),
             CustomTitle(
               title: title,
               style: theme.button!.copyWith(
-                color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.whiteColor,
+                color: isActive ? TingTingAppColor.whiteColor : TingTingAppColor.mainColor,
               ),
             ),
             const Spacer(),
@@ -57,7 +57,7 @@ class ChoiceVoice extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: Dimens.size8),
               child: Icon(
                 Icons.navigate_next,
-                color: isActive ? TingTingAppColor.mainColor : TingTingAppColor.whiteColor,
+                color: isActive ? TingTingAppColor.whiteColor : TingTingAppColor.mainColor,
               ),
             )
           ],

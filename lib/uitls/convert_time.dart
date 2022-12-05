@@ -32,4 +32,13 @@ class ConvertTime {
       timeOfDay.minute,
     );
   }
+
+  static TimeOfDay convertStringToTimeOfDay(String time) {
+    return TimeOfDay(hour: int.parse(time.split(":")[0]), minute: int.parse(time.split(":")[1]));
+  }
+
+  static String convertDayOfTimeToString(DateTime dateTime, TimeOfDay timeOfDay) {
+    final convertToDateTime = convertTimeOfDayToDateTime(dateTime, timeOfDay);
+    return convertDateTime(convertToDateTime, ConvertTimeType.hm);
+  }
 }

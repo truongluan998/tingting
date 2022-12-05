@@ -203,7 +203,7 @@ class AddAlarmScreen extends StatelessWidget {
                   right: Dimens.size16,
                 ),
                 child: AppButton(
-                  onPressed: () {},
+                  onPressed: () async => await clockController.addSleepTime(),
                   borderRadius: BorderRadius.circular(Dimens.size16),
                   child: CustomTitle(
                     title: 'alarm_voice_create'.tr,
