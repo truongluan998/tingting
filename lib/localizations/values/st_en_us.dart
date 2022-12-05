@@ -21,4 +21,8 @@ const Map<String, String> en = {
   'alarm_setting_to_bed': 'to bed',
   'alarm_setting_wake_up': 'wake up',
   'alarm_setting_hours_of_sleep': ' hours of sleep',
+  'snack_bar_announce': 'announce',
+  'snack_bar_validate_alarm': 'choose date and alarm tone',
+  'title_banner': 'you did it! here you can manage your alarm, change time and other things',
+  'show_alarm_title': 'alarm',
 };

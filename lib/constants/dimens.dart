@@ -55,6 +55,7 @@ class Numbers {
   static int numberZero = 0;
   static int numberOne = 1;
   static int numberTwo = 2;
+  static int numberSix = 6;
   static int numberEight = 8;
   static int numberTwentyFour = 24;
 }
@@ -63,7 +64,7 @@ class DimenString {
   static String emptyText = '';
 }
 
-class TimeRanger{
+class TimeRanger {
   static List<String> labelTime = [
     "12 am",
     "3 am",

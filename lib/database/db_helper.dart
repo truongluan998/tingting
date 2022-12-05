@@ -17,7 +17,7 @@ class DBHelper extends DBRepository {
 
   static Future _onCreate(Database db, int version) async {
     await db.execute(
-        'CREATE TABLE TimeSleep (id TEXT PRIMARY KEY, toBedTime TEXT, wakeUpTime TEXT, date TEXT, voice TEXT)');
+        'CREATE TABLE TimeSleep (id TEXT PRIMARY KEY, toBedTime TEXT, wakeUpTime TEXT, date TEXT, voice TEXT, isActive INTEGER)');
   }
 
   _initDB() async {
@@ -38,10 +38,10 @@ class DBHelper extends DBRepository {
   }
 
   @override
-  Future<TimeSleep?> getSleepTime() async {
+  Future<TimeSleep?> getActiveSleepTime() async {
     final db = await database;
     try {
-      final result = await db.rawQuery('SELECT * FROM TimeSleep');
+      final result = await db.rawQuery("SELECT * FROM TimeSleep WHERE isActive='1'");
       if (result.isNotEmpty) {
         return TimeSleep.fromJson(result.first);
       } else {

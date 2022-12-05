@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'time_sleep.g.dart';
 
@@ -9,6 +8,7 @@ class TimeSleep {
   final String? wakeUpTime;
   final String? date;
   final String? voice;
+  final int? isActive;
 
   TimeSleep({
     this.id,
@@ -16,6 +16,7 @@ class TimeSleep {
     this.wakeUpTime,
     this.date,
     this.voice,
+    this.isActive,
   });
 
   factory TimeSleep.fromJson(Map<String, dynamic> json) => _$TimeSleepFromJson(json);

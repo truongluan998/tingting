@@ -5,9 +5,9 @@ import '../constants/dimens.dart';
 
 class TingTingAppTheme {
   static ThemeData buildTheme() => ThemeData(
-        scaffoldBackgroundColor: TingTingAppColor.whiteColor,
+        scaffoldBackgroundColor: TingTingAppColor.appBackgroundColor,
         appBarTheme: const AppBarTheme(
-          color: TingTingAppColor.whiteColor,
+          color: TingTingAppColor.appBackgroundColor,
           elevation: 0
         ),
         fontFamily: 'JosefinSans',
@@ -38,6 +38,11 @@ class TingTingAppTheme {
             fontSize: Dimens.size22,
             color: TingTingAppColor.clockBoxShadow,
             fontWeight: FontWeight.bold,
+          ),
+          bodyText1: TextStyle(
+            fontSize: Dimens.size22,
+            color: TingTingAppColor.textBlackColor,
+            fontWeight: FontWeight.w400,
           ),
           button: TextStyle(
             fontSize: Dimens.size20,

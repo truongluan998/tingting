@@ -12,6 +12,7 @@ TimeSleep _$TimeSleepFromJson(Map<String, dynamic> json) => TimeSleep(
       wakeUpTime: json['wakeUpTime'] as String?,
       date: json['date'] as String?,
       voice: json['voice'] as String?,
+      isActive: json['isActive'] as int?,
     );
 
 Map<String, dynamic> _$TimeSleepToJson(TimeSleep instance) => <String, dynamic>{
@@ -20,4 +21,5 @@ Map<String, dynamic> _$TimeSleepToJson(TimeSleep instance) => <String, dynamic>{
       'wakeUpTime': instance.wakeUpTime,
       'date': instance.date,
       'voice': instance.voice,
+      'isActive': instance.isActive,
     };

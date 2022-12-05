@@ -6,8 +6,8 @@ import '../models/time_sleep.dart';
 class ClockBusiness {
   final _dbHelper = Get.find<DBHelper>();
 
-  Future<TimeSleep?> getSleepTime() async {
-    final timeSleep = await _dbHelper.getSleepTime();
+  Future<TimeSleep?> getActiveSleepTime() async {
+    final timeSleep = await _dbHelper.getActiveSleepTime();
     if (timeSleep != null) {
       return timeSleep;
     } else {

@@ -1,5 +1,5 @@
 const Map<String, String> vi = {
-  'splash_slogan' : 'đặt báo thức và thức dậy dễ dàng',
+  'splash_slogan': 'đặt báo thức và thức dậy dễ dàng',
   'splash_next': 'tiếp tục',
   'alarm_hello': 'xin chào!',
   'alarm_add': "hãy thêm giờ ngủ",
@@ -21,4 +21,8 @@ const Map<String, String> vi = {
   'alarm_setting_to_bed': 'đi ngủ',
   'alarm_setting_wake_up': 'thức dậy',
   'alarm_setting_hours_of_sleep': ' giờ ngủ',
+  'snack_bar_announce': 'thông báo',
+  'snack_bar_validate_alarm': 'chọn ngày và giọng báo thức',
+  'title_banner': 'bạn làm được rồi! tại đây bạn có thể quản lý báo thức, thay đổi thời gian và những thứ khác',
+  'show_alarm_title': 'báo thức',
 };

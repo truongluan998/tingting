@@ -16,6 +16,7 @@ class SplashScreen extends StatelessWidget {
     final theme = Theme.of(context).textTheme;
 
     return Scaffold(
+      backgroundColor: TingTingAppColor.whiteColor,
       body: Stack(
         children: [
           Positioned(

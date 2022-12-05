@@ -60,7 +60,7 @@ class AddAlarmScreen extends StatelessWidget {
                       strokeColor: TingTingAppColor.clockBoxShadow,
                       handlerColor: TingTingAppColor.mainColor,
                       selectedColor: TingTingAppColor.mainColor,
-                      backgroundColor: TingTingAppColor.addAlarmScaffoldColor,
+                      backgroundColor: TingTingAppColor.appBackgroundColor,
                       ticks: Numbers.numberTwentyFour,
                       ticksColor: TingTingAppColor.whiteColor,
                       snap: true,

@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tingting/business/clock_business.dart';
 import 'package:tingting/models/time_sleep.dart';
+import 'package:tingting/uitls/app_utils.dart';
 import 'package:tingting/uitls/convert_time.dart';
 import 'package:tingting/uitls/string_utils.dart';
 import 'package:uuid/uuid.dart';
+
+import '../uitls/convert.dart';
 
 class ClockController extends GetxController {
   var timeNow = DateTime.now().obs;
@@ -18,12 +21,17 @@ class ClockController extends GetxController {
   var listDayOfToSleep = LinkedHashMap().obs;
   var listVoice = LinkedHashMap().obs;
 
+  var isHaveSleepTime = false.obs;
+  var isActiveSleep = false.obs;
+
+  Rx<TimeSleep?> timeSleepFromDB = TimeSleep().obs;
+
   final _clockBusiness = Get.find<ClockBusiness>();
 
   @override
   void onInit() async {
     super.onInit();
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (_) {
       timeNow = DateTime.now().obs;
       update();
     });
@@ -48,24 +56,28 @@ class ClockController extends GetxController {
       'ghost': false,
     });
 
-    final timeSleepFromDB = await _clockBusiness.getSleepTime();
+    timeSleepFromDB.value = await _clockBusiness.getActiveSleepTime();
 
-    if (timeSleepFromDB != null &&
-        StringUtils.isNotNullOrEmpty(timeSleepFromDB.id) &&
-        StringUtils.isNotNullOrEmpty(timeSleepFromDB.toBedTime) &&
-        StringUtils.isNotNullOrEmpty(timeSleepFromDB.wakeUpTime) &&
-        StringUtils.isNotNullOrEmpty(timeSleepFromDB.date) &&
-        StringUtils.isNotNullOrEmpty(timeSleepFromDB.voice)) {
-      timeSleep.value = ConvertTime.convertStringToTimeOfDay(timeSleepFromDB.toBedTime ?? '');
-      timeWakeup.value = ConvertTime.convertStringToTimeOfDay(timeSleepFromDB.wakeUpTime ?? '');
+    if (timeSleepFromDB.value != null &&
+        timeSleepFromDB.value?.isActive != null &&
+        StringUtils.isNotNullOrEmpty(timeSleepFromDB.value?.id) &&
+        StringUtils.isNotNullOrEmpty(timeSleepFromDB.value?.toBedTime) &&
+        StringUtils.isNotNullOrEmpty(timeSleepFromDB.value?.wakeUpTime) &&
+        StringUtils.isNotNullOrEmpty(timeSleepFromDB.value?.date) &&
+        StringUtils.isNotNullOrEmpty(timeSleepFromDB.value?.voice)) {
+      isHaveSleepTime.value = true;
+      isActiveSleep.value = Convert.convertIntToBool(timeSleepFromDB.value?.isActive ?? 0);
+
+      timeSleep.value = ConvertTime.convertStringToTimeOfDay(timeSleepFromDB.value?.toBedTime ?? '');
+      timeWakeup.value = ConvertTime.convertStringToTimeOfDay(timeSleepFromDB.value?.wakeUpTime ?? '');
 
       _calculateSleepingTime();
 
-      for (var day in timeSleepFromDB.date?.split(',') ?? []) {
+      for (var day in timeSleepFromDB.value?.date?.split(',') ?? []) {
         listDayOfToSleep.value.update(day, (value) => true);
       }
 
-      for (var voice in timeSleepFromDB.voice?.split(',') ?? []) {
+      for (var voice in timeSleepFromDB.value?.voice?.split(',') ?? []) {
         listVoice.value.update(voice, (value) => true);
       }
     }
@@ -107,20 +119,30 @@ class ClockController extends GetxController {
   }
 
   void choiceVoice(String key) {
+    listVoice.value.updateAll((key, value) => value = false);
     listVoice.value.update(key, (value) => value = !value);
     update();
   }
 
   Future<void> addSleepTime() async {
-    var setTimeSleep = TimeSleep(
-      id: const Uuid().v1(),
-      toBedTime: ConvertTime.convertDayOfTimeToString(timeNow.value, timeSleep.value),
-      wakeUpTime: ConvertTime.convertDayOfTimeToString(timeNow.value, timeWakeup.value),
-      date: StringUtils.onlyString(
-          listDayOfToSleep.value.keys.where((key) => listDayOfToSleep.value[key] == true).toList()),
-      voice: StringUtils.onlyString(listVoice.value.keys.where((key) => listVoice.value[key] == true).toList()),
-    );
+    final listDate = listDayOfToSleep.value.keys.where((key) => listDayOfToSleep.value[key] == true).toList();
+    final allVoice = listVoice.value.keys.where((key) => listVoice.value[key] == true).toList();
 
-    await _clockBusiness.addSleepTime(setTimeSleep);
+    if (listDate.isNotEmpty && allVoice.isNotEmpty) {
+      final setTimeSleep = TimeSleep(
+        id: const Uuid().v1(),
+        toBedTime: ConvertTime.convertDayOfTimeToString(timeNow.value, timeSleep.value),
+        wakeUpTime: ConvertTime.convertDayOfTimeToString(timeNow.value, timeWakeup.value),
+        date: StringUtils.onlyString(listDate),
+        voice: StringUtils.onlyString(allVoice),
+        isActive: Convert.convertBoolToInt(true),
+      );
+
+      isHaveSleepTime.value = true;
+      await _clockBusiness.addSleepTime(setTimeSleep);
+      Get.back();
+    } else {
+      AppUtils.showCusTomSnackBar('snack_bar_announce'.tr, 'snack_bar_validate_alarm'.tr);
+    }
   }
 }
