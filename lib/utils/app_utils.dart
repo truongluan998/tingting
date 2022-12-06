@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tingting/theme/ting_ting_app_color.dart';
 
 import '../constants/dimens.dart';
+import 'convert_time.dart';
 
 class AppUtils {
   static SnackbarController showCusTomSnackBar(String? header, String? title) {
@@ -19,5 +20,21 @@ class AppUtils {
       dismissDirection: DismissDirection.horizontal,
       forwardAnimationCurve: Curves.easeOutBack,
     );
+  }
+
+  static String calculatorSleepingTime(TimeOfDay timeSleep, TimeOfDay timeWakeup) {
+    var sleep = const Duration().obs;
+
+    final startTime = ConvertTime.convertTimeOfDayToDateTime(timeSleep);
+    final endTime = ConvertTime.convertTimeOfDayToDateTime(timeWakeup).add(
+      const Duration(days: 1),
+    );
+
+    sleep.value = endTime.difference(startTime).abs();
+    if (sleep.value.inHours >= 24) {
+      return (sleep.value.inHours - 24).toString();
+    } else {
+      return '${sleep.value.inHours}';
+    }
   }
 }

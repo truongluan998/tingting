@@ -25,4 +25,5 @@ const Map<String, String> vi = {
   'snack_bar_validate_alarm': 'chọn ngày và giọng báo thức',
   'title_banner': 'bạn làm được rồi! tại đây bạn có thể quản lý báo thức, thay đổi thời gian và những thứ khác',
   'show_alarm_title': 'báo thức',
+  'show_alarm_update': 'chỉnh sửa',
 };

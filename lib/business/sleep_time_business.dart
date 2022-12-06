@@ -6,8 +6,8 @@ import '../models/time_sleep.dart';
 class SleepTimeBusiness {
   final _dbHelper = Get.find<DBHelper>();
 
-  Future<TimeSleep?> getActiveSleepTime() async {
-    final timeSleep = await _dbHelper.getActiveSleepTime();
+  Future<TimeSleep?> getSleepTime() async {
+    final timeSleep = await _dbHelper.getSleepTime();
     if (timeSleep != null) {
       return timeSleep;
     } else {
@@ -18,6 +18,16 @@ class SleepTimeBusiness {
   Future<void> addSleepTime(TimeSleep? timeSleep) async {
     if (timeSleep != null) {
       await _dbHelper.addSleepTime(timeSleep);
+    }
+  }
+
+  Future<void> deleteAllSleepTime() async {
+    await _dbHelper.deleteAllSleepTime();
+  }
+
+  Future<void> updateStatusSleepTime(String? id, int? value) async {
+    if (id != null && value != null) {
+      await _dbHelper.updateStatusSleepTime(id, value);
     }
   }
 }

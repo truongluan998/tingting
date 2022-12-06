@@ -22,6 +22,9 @@ class Dimens {
   static double size0dot5 = 0.5;
   static double size0dot7 = 0.7;
 
+  static double size1 = 1.0;
+  static double size1dot5 = 1.5;
+  static double size2 = 2.0;
   static double size4 = 4.0;
   static double size5 = 5.0;
   static double size8 = 8.0;

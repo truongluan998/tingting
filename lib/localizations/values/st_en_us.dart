@@ -25,4 +25,5 @@ const Map<String, String> en = {
   'snack_bar_validate_alarm': 'choose date and alarm tone',
   'title_banner': 'you did it! here you can manage your alarm, change time and other things',
   'show_alarm_title': 'alarm',
+  'show_alarm_update': 'update',
 };

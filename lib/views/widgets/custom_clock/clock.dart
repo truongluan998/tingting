@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tingting/constants/dimens.dart';
+import 'package:tingting/controllers/step_clock_controller.dart';
 import 'package:tingting/theme/ting_ting_app_color.dart';
 
-import '../../../controllers/sleep_time_controller.dart';
-import '../../../uitls/convert_time.dart';
-import '../../../uitls/enum.dart';
+import '../../../utils/convert_time.dart';
+import '../../../utils/enum.dart';
 import '../../canvas/clock_painter.dart';
 import '../alarm/show_time.dart';
 import 'circle_clock.dart';
@@ -16,7 +16,10 @@ class Clock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final sleepTimeController = Get.find<SleepTimeController>();
+    StepClockController stepClockController;
+
+    stepClockController =
+        Get.isRegistered<StepClockController>() ? Get.find<StepClockController>() : Get.put(StepClockController());
 
     return Center(
       child: Column(
@@ -58,12 +61,12 @@ class Clock extends StatelessWidget {
                   offsetThree: Dimens.negativeSize10,
                   offsetFour: Dimens.negativeSize5,
                 ),
-                GetBuilder<SleepTimeController>(
-                  init: sleepTimeController,
+                GetBuilder<StepClockController>(
+                  init: stepClockController,
                   builder: (_) => Container(
                     constraints: const BoxConstraints.expand(),
                     child: CustomPaint(
-                      painter: ClockPainter(now: sleepTimeController.timeNow.value),
+                      painter: ClockPainter(now: stepClockController.timeNow.value),
                     ),
                   ),
                 ),
@@ -71,13 +74,13 @@ class Clock extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          GetBuilder<SleepTimeController>(
-            init: sleepTimeController,
+          GetBuilder<StepClockController>(
+            init: stepClockController,
             builder: (_) => Row(
               children: [
-                ShowTime(title: ConvertTime.convertDateTime(sleepTimeController.timeNow.value, ConvertTimeType.hms)),
+                ShowTime(title: ConvertTime.convertDateTime(stepClockController.timeNow.value, ConvertTimeType.hms)),
                 const Spacer(),
-                ShowTime(title: ConvertTime.convertDateTime(sleepTimeController.timeNow.value, ConvertTimeType.dmy)),
+                ShowTime(title: ConvertTime.convertDateTime(stepClockController.timeNow.value, ConvertTimeType.dmy)),
               ],
             ),
           )

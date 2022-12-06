@@ -8,17 +8,15 @@ import '../../controllers/bottom_navigation/bottom_navigation_controller.dart';
 import '../../theme/ting_ting_app_color.dart';
 import '../widgets/alarm/item_navigation_bar.dart';
 
-class AlarmScreen extends StatelessWidget {
+class AlarmScreen extends GetWidget<BottomNavigationController> {
   const AlarmScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final bottomNavController = Get.find<BottomNavigationController>();
-
     return Scaffold(
       body: Obx(
         () => IndexedStack(
-          index: bottomNavController.tabIndex.value,
+          index: controller.tabIndex.value,
           children: const [
             ShowSleepTimeScreen(),
             ToDoScreen(),
@@ -34,8 +32,8 @@ class AlarmScreen extends StatelessWidget {
           child: BottomNavigationBar(
             unselectedItemColor: TingTingAppColor.whiteColor,
             selectedItemColor: TingTingAppColor.mainColor,
-            onTap: (index) => bottomNavController.changeTabIndex(index),
-            currentIndex: bottomNavController.tabIndex.value,
+            onTap: (index) => controller.changeTabIndex(index),
+            currentIndex: controller.tabIndex.value,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             backgroundColor: TingTingAppColor.mainColor,
@@ -43,7 +41,7 @@ class AlarmScreen extends StatelessWidget {
             items: [
               BottomNavigationBarItem(
                 icon: ItemNavigationBar(
-                  index: bottomNavController.tabIndex.value,
+                  index: controller.tabIndex.value,
                   matchIndex: Numbers.numberZero,
                   icon: Icons.access_alarm,
                 ),
@@ -51,7 +49,7 @@ class AlarmScreen extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: ItemNavigationBar(
-                  index: bottomNavController.tabIndex.value,
+                  index: controller.tabIndex.value,
                   matchIndex: Numbers.numberOne,
                   icon: Icons.check_circle_outline,
                 ),

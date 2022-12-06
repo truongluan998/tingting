@@ -23,11 +23,11 @@ class ConvertTime {
     return formatted;
   }
 
-  static DateTime convertTimeOfDayToDateTime(DateTime dateTime, TimeOfDay timeOfDay) {
+  static DateTime convertTimeOfDayToDateTime(TimeOfDay timeOfDay) {
     return DateTime(
-      dateTime.year,
-      dateTime.month,
-      dateTime.day,
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
       timeOfDay.hour,
       timeOfDay.minute,
     );
@@ -37,8 +37,8 @@ class ConvertTime {
     return TimeOfDay(hour: int.parse(time.split(":")[0]), minute: int.parse(time.split(":")[1]));
   }
 
-  static String convertDayOfTimeToString(DateTime dateTime, TimeOfDay timeOfDay) {
-    final convertToDateTime = convertTimeOfDayToDateTime(dateTime, timeOfDay);
+  static String convertDayOfTimeToString(TimeOfDay timeOfDay) {
+    final convertToDateTime = convertTimeOfDayToDateTime(timeOfDay);
     return convertDateTime(convertToDateTime, ConvertTimeType.hm);
   }
 }

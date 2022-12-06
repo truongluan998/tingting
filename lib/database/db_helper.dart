@@ -38,10 +38,10 @@ class DBHelper extends DBRepository {
   }
 
   @override
-  Future<TimeSleep?> getActiveSleepTime() async {
+  Future<TimeSleep?> getSleepTime() async {
     final db = await database;
     try {
-      final result = await db.rawQuery("SELECT * FROM TimeSleep WHERE isActive='1'");
+      final result = await db.rawQuery("SELECT * FROM TimeSleep");
       if (result.isNotEmpty) {
         return TimeSleep.fromJson(result.first);
       } else {
@@ -53,14 +53,20 @@ class DBHelper extends DBRepository {
   }
 
   @override
-  Future<TimeSleep?> updateSleepTime(String? id) {
-    // TODO: implement updateSleepTime
-    throw UnimplementedError();
+  Future<void> updateStatusSleepTime(String? id, int? value) async {
+    final db = await database;
+    try {
+      if (id != null && value != null) {
+        await db.rawQuery("UPDATE TimeSleep SET isActive='$value' WHERE id='$id'");
+      }
+    } catch (_) {}
   }
 
   @override
-  Future<void> deleteAllSleepTime() {
-    // TODO: implement deleteAllSleepTime
-    throw UnimplementedError();
+  Future<void> deleteAllSleepTime() async {
+    final db = await database;
+    try {
+      await db.rawQuery("DELETE FROM TimeSleep");
+    } catch (_) {}
   }
 }
