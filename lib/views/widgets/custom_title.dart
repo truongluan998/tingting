@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-
-import '../../constants/dimens.dart';
 
 class CustomTitle extends StatelessWidget {
   final String title;

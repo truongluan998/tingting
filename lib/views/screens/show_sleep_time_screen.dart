@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:get/get.dart';
-import 'package:tingting/controllers/clock_controller.dart';
+import 'package:tingting/controllers/sleep_time_controller.dart';
 import 'package:tingting/theme/ting_ting_app_color.dart';
 import 'package:tingting/views/widgets/custom_clock/clock.dart';
 
@@ -9,22 +9,22 @@ import '../../constants/dimens.dart';
 import '../widgets/app_button.dart';
 import '../widgets/custom_title.dart';
 
-class ShowAlarmScreen extends StatelessWidget {
-  const ShowAlarmScreen({Key? key}) : super(key: key);
+class ShowSleepTimeScreen extends StatelessWidget {
+  const ShowSleepTimeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context).textTheme;
 
-    final clockController = Get.find<ClockController>();
+    final sleepTimeController = Get.find<SleepTimeController>();
 
     return SafeArea(
       child: Scaffold(
         body: Padding(
           padding: EdgeInsets.all(Dimens.size24),
           child: Obx(
-            () => clockController.isHaveSleepTime.value
+            () => sleepTimeController.isHaveSleepTime.value
                 ? Column(
                     children: [
                       Card(
@@ -97,7 +97,7 @@ class ShowAlarmScreen extends StatelessWidget {
                                     inactiveColor: TingTingAppColor.clockGradientColorTwo,
                                     activeTextColor: TingTingAppColor.whiteColor,
                                     inactiveTextColor: TingTingAppColor.mainColor,
-                                    value: !clockController.isActiveSleep.value,
+                                    value: !sleepTimeController.isActiveSleep.value,
                                     onToggle: (val) {},
                                   ),
                                 ],

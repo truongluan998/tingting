@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
-import 'package:tingting/views/screens/add_alarm_screen.dart';
+import 'package:tingting/views/screens/add_sleep_time_screen.dart';
 import 'package:tingting/views/screens/alarm_screen.dart';
 import 'package:tingting/views/screens/to_do_screen.dart';
 
 import '../bindings/bottom_navigation_binding.dart';
-import '../views/screens/show_alarm_screen.dart';
+import '../views/screens/show_sleep_time_screen.dart';
 import '../views/screens/splash_screen.dart';
 
 class CustomRoute {
@@ -22,7 +22,7 @@ class CustomRoute {
     ),
     GetPage(
       name: '/show_alarm',
-      page: () => const ShowAlarmScreen(),
+      page: () => const ShowSleepTimeScreen(),
       transition: Transition.cupertino,
     ),
     GetPage(
@@ -32,7 +32,7 @@ class CustomRoute {
     ),
     GetPage(
       name: '/add_alarm',
-      page: () => const AddAlarmScreen(),
+      page: () => const AddSleepTimeScreen(),
       transition: Transition.cupertino,
     ),
   ];

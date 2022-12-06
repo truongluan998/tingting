@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tingting/views/screens/show_alarm_screen.dart';
+import 'package:tingting/views/screens/show_sleep_time_screen.dart';
 import 'package:tingting/views/screens/to_do_screen.dart';
 
 import '../../constants/dimens.dart';
@@ -20,7 +20,7 @@ class AlarmScreen extends StatelessWidget {
         () => IndexedStack(
           index: bottomNavController.tabIndex.value,
           children: const [
-            ShowAlarmScreen(),
+            ShowSleepTimeScreen(),
             ToDoScreen(),
           ],
         ),

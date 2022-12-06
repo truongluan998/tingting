@@ -3,7 +3,7 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tingting/business/clock_business.dart';
+import 'package:tingting/business/sleep_time_business.dart';
 import 'package:tingting/models/time_sleep.dart';
 import 'package:tingting/uitls/app_utils.dart';
 import 'package:tingting/uitls/convert_time.dart';
@@ -12,7 +12,7 @@ import 'package:uuid/uuid.dart';
 
 import '../uitls/convert.dart';
 
-class ClockController extends GetxController {
+class SleepTimeController extends GetxController {
   var timeNow = DateTime.now().obs;
   var timeSleep = const TimeOfDay(hour: 22, minute: 0).obs;
   var timeWakeup = const TimeOfDay(hour: 6, minute: 0).obs;
@@ -26,7 +26,7 @@ class ClockController extends GetxController {
 
   Rx<TimeSleep?> timeSleepFromDB = TimeSleep().obs;
 
-  final _clockBusiness = Get.find<ClockBusiness>();
+  final _sleepTimeBusiness = Get.find<SleepTimeBusiness>();
 
   @override
   void onInit() async {
@@ -56,7 +56,7 @@ class ClockController extends GetxController {
       'ghost': false,
     });
 
-    timeSleepFromDB.value = await _clockBusiness.getActiveSleepTime();
+    timeSleepFromDB.value = await _sleepTimeBusiness.getActiveSleepTime();
 
     if (timeSleepFromDB.value != null &&
         timeSleepFromDB.value?.isActive != null &&
@@ -139,7 +139,7 @@ class ClockController extends GetxController {
       );
 
       isHaveSleepTime.value = true;
-      await _clockBusiness.addSleepTime(setTimeSleep);
+      await _sleepTimeBusiness.addSleepTime(setTimeSleep);
       Get.back();
     } else {
       AppUtils.showCusTomSnackBar('snack_bar_announce'.tr, 'snack_bar_validate_alarm'.tr);

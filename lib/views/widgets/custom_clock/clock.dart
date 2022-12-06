@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:tingting/constants/dimens.dart';
 import 'package:tingting/theme/ting_ting_app_color.dart';
 
-import '../../../controllers/clock_controller.dart';
+import '../../../controllers/sleep_time_controller.dart';
 import '../../../uitls/convert_time.dart';
 import '../../../uitls/enum.dart';
 import '../../canvas/clock_painter.dart';
@@ -16,7 +16,7 @@ class Clock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final clockController = Get.find<ClockController>();
+    final sleepTimeController = Get.find<SleepTimeController>();
 
     return Center(
       child: Column(
@@ -58,12 +58,12 @@ class Clock extends StatelessWidget {
                   offsetThree: Dimens.negativeSize10,
                   offsetFour: Dimens.negativeSize5,
                 ),
-                GetBuilder<ClockController>(
-                  init: clockController,
+                GetBuilder<SleepTimeController>(
+                  init: sleepTimeController,
                   builder: (_) => Container(
                     constraints: const BoxConstraints.expand(),
                     child: CustomPaint(
-                      painter: ClockPainter(now: clockController.timeNow.value),
+                      painter: ClockPainter(now: sleepTimeController.timeNow.value),
                     ),
                   ),
                 ),
@@ -71,13 +71,13 @@ class Clock extends StatelessWidget {
             ),
           ),
           const Spacer(),
-          GetBuilder<ClockController>(
-            init: clockController,
+          GetBuilder<SleepTimeController>(
+            init: sleepTimeController,
             builder: (_) => Row(
               children: [
-                ShowTime(title: ConvertTime.convertDateTime(clockController.timeNow.value, ConvertTimeType.hms)),
+                ShowTime(title: ConvertTime.convertDateTime(sleepTimeController.timeNow.value, ConvertTimeType.hms)),
                 const Spacer(),
-                ShowTime(title: ConvertTime.convertDateTime(clockController.timeNow.value, ConvertTimeType.dmy)),
+                ShowTime(title: ConvertTime.convertDateTime(sleepTimeController.timeNow.value, ConvertTimeType.dmy)),
               ],
             ),
           )

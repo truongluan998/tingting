@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import '../database/db_helper.dart';
 import '../models/time_sleep.dart';
 
-class ClockBusiness {
+class SleepTimeBusiness {
   final _dbHelper = Get.find<DBHelper>();
 
   Future<TimeSleep?> getActiveSleepTime() async {
